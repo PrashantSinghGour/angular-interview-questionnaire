@@ -7,7 +7,9 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:angular-questions": "node dist/angular-questions/server/server.mjs"
+    "serve:ssr:angular-questions": "node dist/angular-questions/server/server.mjs",
+    "firebase-deploy": "firebase deploy",
+    "deploy": "npm run build && npm run firebase-deploy"
   },
   "private": true,
   "dependencies": {
