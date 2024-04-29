@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "npm run format && ng serve",
+    "build": "npm run format && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:angular-questions": "node dist/angular-questions/server/server.mjs",
