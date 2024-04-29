@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "angular-iq"
+  },
+  "targets": {
+    "angular-iq": {
+      "hosting": {
+        "angular-questions": [
+          "angular-iq"
+        ]
+      }
+    }
   }
 }
