@@ -1,9 +1,9 @@
 :root {
-  --orange-red:oklch(63.32% .24 31.68);
-  --vivid-pink: oklch(69.02% .277 332.77);
-  --electric-violet: oklch(53.18% .28 296.97);
+  --orange-red: oklch(63.32% 0.24 31.68);
+  --vivid-pink: oklch(69.02% 0.277 332.77);
+  --electric-violet: oklch(53.18% 0.28 296.97);
   --page-background: white;
-  --gray-900: oklch(19.37% .006 300.98);
+  --gray-900: oklch(19.37% 0.006 300.98);
   --primary-contrast: var(--gray-900);
   --page-bg-radial-gradient: radial-gradient(circle, white 0%, white 100%);
 }

@@ -15,16 +15,10 @@ export class IndexDbService {
     if (!indexedDB) {
       return;
     }
-    const openRequest: IDBOpenDBRequest = indexedDB?.open(
-      this.dbName,
-      this.dbVersion
-    );
+    const openRequest: IDBOpenDBRequest = indexedDB?.open(this.dbName, this.dbVersion);
 
     openRequest.onerror = (event: Event) => {
-      console.error(
-        'Failed to open IndexedDB database:',
-        (event.target as IDBOpenDBRequest).error
-      );
+      console.error('Failed to open IndexedDB database:', (event.target as IDBOpenDBRequest).error);
     };
 
     openRequest.onsuccess = (event: Event) => {
@@ -67,13 +61,8 @@ export class IndexDbService {
     }
 
     return new Promise<boolean>((resolve, reject) => {
-      const transaction: IDBTransaction = this.db.transaction(
-        this.objectStoreName,
-        'readwrite'
-      );
-      const objectStore: IDBObjectStore = transaction.objectStore(
-        this.objectStoreName
-      );
+      const transaction: IDBTransaction = this.db.transaction(this.objectStoreName, 'readwrite');
+      const objectStore: IDBObjectStore = transaction.objectStore(this.objectStoreName);
 
       const request: IDBRequest<IDBValidKey> = objectStore.put(record);
 
@@ -82,10 +71,7 @@ export class IndexDbService {
       };
 
       request.onerror = (event: Event) => {
-        console.error(
-          'Failed to save file:',
-          (event.target as IDBRequest).error
-        );
+        console.error('Failed to save file:', (event.target as IDBRequest).error);
         reject(false);
       };
     });
@@ -98,13 +84,8 @@ export class IndexDbService {
   public retrieveQuestions(): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       const retrieveCallback: () => void = () => {
-        const transaction: IDBTransaction = this.db.transaction(
-          this.objectStoreName,
-          'readonly'
-        );
-        const objectStore: IDBObjectStore = transaction.objectStore(
-          this.objectStoreName
-        );
+        const transaction: IDBTransaction = this.db.transaction(this.objectStoreName, 'readonly');
+        const objectStore: IDBObjectStore = transaction.objectStore(this.objectStoreName);
 
         const retrieveRequest: IDBRequest = objectStore.getAll();
 
@@ -114,10 +95,7 @@ export class IndexDbService {
         };
 
         retrieveRequest.onerror = (event: Event) => {
-          console.error(
-            'Failed to retrieve files:',
-            (event.target as IDBRequest).error
-          );
+          console.error('Failed to retrieve files:', (event.target as IDBRequest).error);
           reject((event.target as IDBRequest).error);
         };
       };
@@ -136,13 +114,8 @@ export class IndexDbService {
    */
 
   public async clearFiles(): Promise<void> {
-    const transaction: IDBTransaction = this.db.transaction(
-      this.objectStoreName,
-      'readwrite'
-    );
-    const objectStore: IDBObjectStore = transaction.objectStore(
-      this.objectStoreName
-    );
+    const transaction: IDBTransaction = this.db.transaction(this.objectStoreName, 'readwrite');
+    const objectStore: IDBObjectStore = transaction.objectStore(this.objectStoreName);
 
     return new Promise<void>((resolve, reject) => {
       const clearRequest: IDBRequest = objectStore.clear();
@@ -152,10 +125,7 @@ export class IndexDbService {
       };
 
       clearRequest.onerror = (event: Event) => {
-        console.error(
-          'Failed to clear files:',
-          (event.target as IDBRequest).error
-        );
+        console.error('Failed to clear files:', (event.target as IDBRequest).error);
         reject();
       };
     });

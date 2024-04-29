@@ -2,11 +2,10 @@ import { Directive, HostListener } from '@angular/core';
 
 @Directive({
   selector: '[onlyNumber]',
-  standalone: true
+  standalone: true,
 })
 export class OnlyNumberDirective {
-
-  constructor() { }
+  constructor() {}
 
   @HostListener('keydown', ['$event'])
   onValueChange(event: KeyboardEvent) {
@@ -37,5 +36,4 @@ export class OnlyNumberDirective {
       event.preventDefault();
     }
   }
-
 }

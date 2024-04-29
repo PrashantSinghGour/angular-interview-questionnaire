@@ -8,13 +8,7 @@ import { OnlyNumberDirective } from './directive';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    FormsModule,
-    MarkdownModule,
-    OnlyNumberDirective,
-  ],
+  imports: [CommonModule, HttpClientModule, FormsModule, MarkdownModule, OnlyNumberDirective],
   templateUrl: './app.component.html',
   providers: [provideMarkdown(), IndexDbService],
   styleUrl: './app.component.scss',
@@ -37,9 +31,7 @@ export class AppComponent implements OnInit {
 
     const lastUpdated = new Date(date);
     const now = new Date();
-    const diffInDays = Math.floor(
-      (now.getTime() - lastUpdated.getTime()) / (1000 * 3600 * 24)
-    );
+    const diffInDays = Math.floor((now.getTime() - lastUpdated.getTime()) / (1000 * 3600 * 24));
 
     return diffInDays >= 1; // Data is older than 1 day
   }
@@ -52,10 +44,7 @@ export class AppComponent implements OnInit {
   async getData() {
     const questionsObj: any[] = await this.indexDb.retrieveQuestions();
 
-    if (
-      questionsObj?.length &&
-      !this.shouldFetchData(questionsObj[0].lastUpdated)
-    ) {
+    if (questionsObj?.length && !this.shouldFetchData(questionsObj[0].lastUpdated)) {
       this.setQuestion(questionsObj[0]);
     } else {
       this.fetchQuestions();
@@ -64,10 +53,9 @@ export class AppComponent implements OnInit {
 
   fetchQuestions() {
     this.http
-      .get(
-        'https://api.github.com/repos/PrashantSinghGour/angular-questions-bank/contents/README.md?ref=master',
-        { responseType: 'text' }
-      )
+      .get('https://api.github.com/repos/PrashantSinghGour/angular-questions-bank/contents/README.md?ref=master', {
+        responseType: 'text',
+      })
       .subscribe({
         next: (data: any) => {
           const reqData = JSON.parse(data);
@@ -84,7 +72,7 @@ export class AppComponent implements OnInit {
   setQuestion(reqData: any) {
     let bytes = Uint8Array.from(atob(reqData.content), (c) => c.charCodeAt(0));
     let text = new TextDecoder().decode(bytes);
-    const questions =        text
+    const questions = text
       .replace(/\\n/g, '  \n')
       .split(/(?<!#)###(?!#)/)
       .map((question: string, index: number) => {
@@ -97,9 +85,9 @@ export class AppComponent implements OnInit {
           .replace(/# /g, '')
           .replace(/###(\w)/g, '### $1')}`;
         return que;
-      })
-     questions.splice(0, 2);
-      this.questions.set(questions);
+      });
+    questions.splice(0, 2);
+    this.questions.set(questions);
   }
 
   onNext() {
