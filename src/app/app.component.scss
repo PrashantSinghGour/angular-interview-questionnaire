@@ -2,6 +2,7 @@
   margin: 1rem;
   width: 12rem;
   height: auto;
+
   h3 {
     text-align: center;
     font-size: 1rem;
@@ -14,19 +15,47 @@
     -webkit-background-clip: text;
     /* for Safari */
     color: transparent;
+
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
   }
 }
 
-.mwl-font{
-
+.mwl-font {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
   font-size: 0.9rem;
 }
 
 .question-nav {
   margin-top: 3rem;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+
   button:disabled,
   .disabled {
     cursor: not-allowed !important;
+  }
+
+  .refresh-icon {
+    display: inline-block;
+    cursor: pointer;
+    width: 2.6rem;
+    height: auto;
+    background: white;
+    border: none;
+
+    &:hover {
+      transform: scale(1.2, 1.2);
+      transform-origin: center center;
+      transition: all 0.1s ease-in 0s;
+    }
   }
 }
 
@@ -158,4 +187,30 @@
     --vivid-pink 50%,
     --electric-violet
   );
+}
+
+@media (max-width: 425px) {
+  .angular-logo {
+    width: 8rem;
+
+    h3 {
+      font-size: 0.7rem;
+    }
+  }
+
+  .mwl-font {
+    font-size: 0.75rem;
+  }
+
+  .question-nav{
+    display: block !important;
+    .nav-btns {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .question-number {
+      text-align: center;
+    }
+  }
 }
