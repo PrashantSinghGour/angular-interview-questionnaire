@@ -1,26 +1,13 @@
 {
-  "hosting": [
-    {
-      "public": "dist/angular-questions/browser",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ],
-      "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ],
-      "trailingSlash": false
-    },
-    {
-      "target": "angular-questions",
-      "source": ".",
-      "frameworksBackend": {
-        "region": "asia-east1"
+  "hosting": {
+    "public": "dist/angular-questions/browser",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
       }
-    }
-  ]
+    ],
+    "trailingSlash": false
+  }
 }
