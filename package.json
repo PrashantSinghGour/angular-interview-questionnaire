@@ -57,5 +57,10 @@
     "prettier": "^3.2.5",
     "pretty-quick": "^4.0.0",
     "typescript": "~5.4.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run precommit"
+    }
   }
 }

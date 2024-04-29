@@ -84,7 +84,7 @@ export class AppComponent implements OnInit {
   setQuestion(reqData: any) {
     let bytes = Uint8Array.from(atob(reqData.content), (c) => c.charCodeAt(0));
     let text = new TextDecoder().decode(bytes);
-    const questions =         text
+    const questions =        text
       .replace(/\\n/g, '  \n')
       .split(/(?<!#)###(?!#)/)
       .map((question: string, index: number) => {
