@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class IndexDbService {
-  private dbName: string = 'localDB';
+  private dbName: string = 'ng-iq-database';
   private objectStoreName: string = 'angularQuestions';
   private dbVersion: number = 1;
   private db!: IDBDatabase;

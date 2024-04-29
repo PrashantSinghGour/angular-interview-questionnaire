@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component, OnInit, importProvidersFrom, inject } from '@angular/core';
+import { Component, OnInit, WritableSignal, importProvidersFrom, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MarkdownModule, provideMarkdown } from 'ngx-markdown';
 import { IndexDbService } from './services/index-db.service';
@@ -20,10 +20,10 @@ import { OnlyNumberDirective } from './directive';
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
-  questions: any = [];
-  http = inject(HttpClient);
+  private http = inject(HttpClient);
   private indexDb = inject(IndexDbService);
-  questionNumber = 1;
+  questions: WritableSignal<any[]> = signal([]);
+  questionNumber: WritableSignal<number> = signal(1);
   ngOnInit(): void {
     this.indexDb.createLayerDB();
     this.getData();
@@ -41,16 +41,21 @@ export class AppComponent implements OnInit {
       (now.getTime() - lastUpdated.getTime()) / (1000 * 3600 * 24)
     );
 
-    return diffInDays >= 7; // Data is older than 7 days
+    return diffInDays >= 1; // Data is older than 1 day
   }
 
   setData(reqData: any) {
+    reqData.lastUpdated = new Date();
     this.indexDb.saveQuestionsRecords(reqData);
   }
 
   async getData() {
     const questionsObj: any[] = await this.indexDb.retrieveQuestions();
-    if (questionsObj?.length) {
+
+    if (
+      questionsObj?.length &&
+      !this.shouldFetchData(questionsObj[0].lastUpdated)
+    ) {
       this.setQuestion(questionsObj[0]);
     } else {
       this.fetchQuestions();
@@ -60,7 +65,7 @@ export class AppComponent implements OnInit {
   fetchQuestions() {
     this.http
       .get(
-        'https://api.github.com/repos/sudheerj/angular-interview-questions/contents/README.md?ref=master',
+        'https://api.github.com/repos/PrashantSinghGour/angular-questions-bank/contents/README.md?ref=master',
         { responseType: 'text' }
       )
       .subscribe({
@@ -79,7 +84,7 @@ export class AppComponent implements OnInit {
   setQuestion(reqData: any) {
     let bytes = Uint8Array.from(atob(reqData.content), (c) => c.charCodeAt(0));
     let text = new TextDecoder().decode(bytes);
-    this.questions = text
+    const questions = text
       .replace(/\\n/g, '  \n')
       .split(/(?<!#)###(?!#)/)
       .map((question: string, index: number) => {
@@ -92,21 +97,22 @@ export class AppComponent implements OnInit {
           .replace(/# /g, '')
           .replace(/###(\w)/g, '### $1')}`;
         return que;
-      });
-    this.questions.splice(0, 2);
+      })
+     questions.splice(0, 2);
+      this.questions.set(questions);
   }
 
   onNext() {
-    this.questionNumber = +this.questionNumber + 1;
+    this.questionNumber.set(+this.questionNumber() + 1);
   }
   onBack() {
-    if (+this.questionNumber === 1) {
+    if (+this.questionNumber() === 1) {
       return;
     }
-    this.questionNumber = +this.questionNumber - 1;
+    this.questionNumber.set(+this.questionNumber() - 1);
   }
 
   updateQuestionNumber(queNumber: string) {
-    queNumber && (this.questionNumber = +queNumber);
+    queNumber && this.questionNumber.set(+queNumber);
   }
 }
