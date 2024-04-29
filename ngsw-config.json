@@ -1,0 +1,43 @@
+{
+  "$schema": "./node_modules/@angular/service-worker/config/schema.json",
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "resources": {
+        "files": [
+          "/favicon.ico",
+          "/index.html",
+          "/manifest.webmanifest",
+          "/*.css",
+          "/*.js"
+        ],
+        "urls": [
+          "https://angular-iq.web.app/assets/images/architecture.png",
+          "https://angular-iq.web.app/assets/images/browser-module-error.gif",
+          "https://angular-iq.web.app/assets/images/createElement.png",
+          "https://angular-iq.web.app/assets/images/customElement.png",
+          "https://angular-iq.web.app/assets/images/element injector hieracrhy.png",
+          "https://angular-iq.web.app/assets/images/hierarchy diagram.png",
+          "https://angular-iq.web.app/assets/images/injector hierarchies.png",
+          "https://angular-iq.web.app/assets/images/language-completion.gif",
+          "https://angular-iq.web.app/assets/images/language-error.gif",
+          "https://angular-iq.web.app/assets/images/language-navigation.gif",
+          "https://angular-iq.web.app/assets/images/lifecycle.png"
+        ]
+      }
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/assets/**",
+          "/media/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"
+        ]
+      }
+    }
+  ]
+}

@@ -81,8 +81,7 @@ header {
 @media (max-width: 425px) {
   markdown {
     img {
-      width: 95vw;
-      height: auto;
+      max-width: 95vw;
     }
   }
 }
