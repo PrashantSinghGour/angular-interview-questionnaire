@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
   private indexDb = inject(IndexDbService);
   questions: WritableSignal<any[]> = signal([]);
   questionNumber: WritableSignal<number> = signal(1);
+  isLoading: WritableSignal<boolean> = signal(true);
   ngOnInit(): void {
     this.indexDb.createLayerDB();
     this.getData();
@@ -64,7 +65,7 @@ export class AppComponent implements OnInit {
           console.log('new data fetched!');
         },
         error: (err: any) => {
-          console.error('🚀 ~ AppComponent ~ fetchQuestions ~ err:', err);
+          console.error(err);
         },
       });
   }
@@ -88,6 +89,7 @@ export class AppComponent implements OnInit {
       });
     questions.splice(0, 2);
     this.questions.set(questions);
+    this.isLoading.set(false);
   }
 
   onNext() {

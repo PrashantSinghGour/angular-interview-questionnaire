@@ -45,74 +45,99 @@
 </header>
 
 <div class="content container">
-  <div class="question-nav d-flex justify-content-between align-items-center">
-    <div class="nav-btns">
-      <span class="d-inline-block" [ngClass]="{ disabled: questionNumber() === 1 }">
-        <button class="btn theme-button-1 me-2" (click)="onBack()" [disabled]="questionNumber() === 1">Back</button>
-      </span>
-      <span [ngClass]="{ disabled: questionNumber() === questions()?.length }">
-        <button class="btn theme-button-1" (click)="onNext()" [disabled]="questionNumber() === questions()?.length">
-          Next
-        </button>
-      </span>
-    </div>
-    <div class="col-md-3 col-12 mt-md-0 mt-4 question-number">
-      <!-- here visibility hidden is used to avoid flickering. -->
-      <button
-        class="me-2 refresh-icon"
-        title="Reset to 1"
-        [style.visibility]="questionNumber() === 1 ? 'hidden' : 'visible'"
-        (click)="questionNumber.set(1)"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-          <path
-            d="M288 193s12.18-6-32-6a80 80 0 1080 80"
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-miterlimit="10"
-            stroke-width="28"
-          />
-          <path
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="28"
-            d="M256 149l40 40-40 40"
-          />
-          <path
-            d="M256 64C150 64 64 150 64 256s86 192 192 192 192-86 192-192S362 64 256 64z"
-            fill="none"
-            stroke="currentColor"
-            stroke-miterlimit="10"
-            stroke-width="32"
-          />
-        </svg>
-      </button>
-      <input
-        type="text"
-        [ngClass]="{ 'is-invalid': questionNumber() > questions().length }"
-        class="jump-to-input d-inline-block w-25 form-control"
-        [ngModel]="questionNumber()"
-        (ngModelChange)="updateQuestionNumber($event)"
-        onlyNumber
-      />
-      <span class="fw-bold ms-2">of {{ questions()?.length }}</span>
-    </div>
-  </div>
-  <div class="mt-4">
-    @if (questions()?.length) {
-      <div>
-        <markdown
-          clipboard
-          lineNumbers
-          [data]="questions()[questionNumber() - 1]"
-          [disableSanitizer]="true"
-          ngSkipHydration
-        >
-        </markdown>
+  @if (!isLoading()) {
+    <div class="question-nav d-flex justify-content-between align-items-center">
+      <div class="nav-btns">
+        <span class="d-inline-block" [ngClass]="{ disabled: questionNumber() === 1 }">
+          <button class="btn theme-button-1 me-2" (click)="onBack()" [disabled]="questionNumber() === 1">Back</button>
+        </span>
+        <span [ngClass]="{ disabled: questionNumber() === questions()?.length }">
+          <button class="btn theme-button-1" (click)="onNext()" [disabled]="questionNumber() === questions()?.length">
+            Next
+          </button>
+        </span>
       </div>
-    }
-  </div>
+      <div class="col-md-3 col-12 mt-md-0 mt-4 question-number">
+        <!-- here visibility hidden is used to avoid flickering. -->
+        <button
+          class="me-2 refresh-icon"
+          title="Reset to 1"
+          [style.visibility]="questionNumber() === 1 ? 'hidden' : 'visible'"
+          (click)="questionNumber.set(1)"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+            <path
+              d="M288 193s12.18-6-32-6a80 80 0 1080 80"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-miterlimit="10"
+              stroke-width="28"
+            />
+            <path
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="28"
+              d="M256 149l40 40-40 40"
+            />
+            <path
+              d="M256 64C150 64 64 150 64 256s86 192 192 192 192-86 192-192S362 64 256 64z"
+              fill="none"
+              stroke="currentColor"
+              stroke-miterlimit="10"
+              stroke-width="32"
+            />
+          </svg>
+        </button>
+        <input
+          type="text"
+          [ngClass]="{ 'is-invalid': questionNumber() > questions().length }"
+          class="jump-to-input d-inline-block w-25 form-control"
+          [ngModel]="questionNumber()"
+          (ngModelChange)="updateQuestionNumber($event)"
+          onlyNumber
+        />
+        <span class="fw-bold ms-2">of {{ questions()?.length }}</span>
+      </div>
+    </div>
+    <div class="mt-4">
+      @if (questions()?.length) {
+        <div>
+          <markdown
+            clipboard
+            lineNumbers
+            [data]="questions()[questionNumber() - 1]"
+            [disableSanitizer]="true"
+            ngSkipHydration
+          >
+          </markdown>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="shimmer">
+      <div class="question-nav d-flex justify-content-between align-items-center">
+        <div class="nav-btns">
+          <div class="btn d-inline-block me-2"></div>
+          <div class="btn d-inline-block"></div>
+        </div>
+        <div class="question-count mt-md-0 mt-4 question-number">
+          <div class="btn d-inline-block"></div>
+        </div>
+      </div>
+      <div class="mt-4">
+        <div class="btn question"></div>
+        <div class="btn mt-4 answers"></div>
+        <div class="btn mt-4 answers"></div>
+        <div class="btn mt-4 answers"></div>
+        <div class="btn mt-4 answers"></div>
+        <div class="btn mt-4 answers"></div>
+        <div class="btn mt-4 answers"></div>
+        <div class="btn mt-4 answers"></div>
+        <div class="btn mt-4 answers"></div>
+      </div>
+    </div>
+  }
 </div>
