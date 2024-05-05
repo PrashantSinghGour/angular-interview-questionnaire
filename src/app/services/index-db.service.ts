@@ -63,8 +63,8 @@ export class IndexDbService {
     return new Promise<boolean>((resolve, reject) => {
       const transaction: IDBTransaction = this.db.transaction(this.objectStoreName, 'readwrite');
       const objectStore: IDBObjectStore = transaction.objectStore(this.objectStoreName);
-
-      const request: IDBRequest<IDBValidKey> = objectStore.put(record);
+      objectStore.clear();
+      const request: IDBRequest<IDBValidKey> = objectStore.add(record);
 
       request.onsuccess = () => {
         resolve(true);
